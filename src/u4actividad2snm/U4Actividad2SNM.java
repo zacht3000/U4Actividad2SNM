@@ -23,5 +23,7 @@ public class U4Actividad2SNM {
         String[] cartas = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "S", "C", "R"};
         String[] palos = {"OROS", "ESPADAS", "BASTOS", "COPAS"};
         String[] palosPrefix = {"O", "E", "B", "C"};
+        //Inprimir palo dominate
+        int paloDominante =(int) (Math.random() * palos.length);
     }
 }
