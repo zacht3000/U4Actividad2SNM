@@ -20,5 +20,26 @@ public class U4Actividad2SNM {
         String[] palosPrefix = {"O", "E", "B", "C"};
         //Inprimir palo dominate
         int paloDominante =(int) (Math.random() * palos.length);
+        //Generar baraja
+        int[][] baraja = generarBaraja(palos, cartas, JUGADORES, REPARTICION);
+    }
+    
+    public int[][] generarBaraja(String[] palos, String[] cartas, int jugadores, int repartirCartas) 
+    {
+        int[][] baraja = new int[palos.length][cartas.length];
+        for (int i = 0; i < repartirCartas; i++) 
+        {
+            for (int j = 1; j <= jugadores; j++) 
+            {
+                int positionY = (int) (Math.random() * palos.length);
+                int positionX = (int) (Math.random() * cartas.length);
+                
+                if (baraja[positionY][positionX] == 0)
+                    baraja[positionX][positionX] = j;
+                else
+                    --j;
+            }
+        }
+        return baraja;
     }
 }
