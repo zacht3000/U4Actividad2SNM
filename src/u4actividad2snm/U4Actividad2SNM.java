@@ -27,9 +27,8 @@ public class U4Actividad2SNM {
         int[][] baraja = generarBaraja(palos, cartas, JUGADORES, REPARTICION);
         //Array de los datos introducidos
         String[] totalCartasLanzadas = new String[JUGADORES];
-        
         //----------------------
-        System.out.println("Palo dominante => " + palos[paloDominante]); 
+        System.out.println("Palo dominante => " + palos[paloDominante]);
 
         //----------------------------------------------------------------------------  
         for (int j = 1; j <= JUGADORES; j++) {
@@ -47,6 +46,12 @@ public class U4Actividad2SNM {
             } while (true);
 
         }
+        //----------------------------------------------
+
+        int[] puntuaciones = comprobarPuntuacion(totalCartasLanzadas, palosPrefix, paloDominante, JUGADORES);
+        int mayorPuntuacion = mayorNumero(puntuaciones);
+
+        imprimirGanadores(puntuaciones, mayorPuntuacion);
 
     }
 
@@ -97,6 +102,16 @@ public class U4Actividad2SNM {
         return false;
     }
 
+    public boolean hayCartasEnPaloDom(String[] cartasLanzadas, String simboloPaloDom) {
+        for (String carta : cartasLanzadas) {
+            String prefijoPalo = carta.substring(1);
+            if (prefijoPalo.equals(simboloPaloDom)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public int[] cartasValores() {
         int[] valores = {10, 0, 0, 0, 5, 0, 0, 0, 0, 2, 3, 4};
         return valores;
@@ -118,5 +133,5 @@ public class U4Actividad2SNM {
         return palosPrefix;
     }
     
-
+    
 }
