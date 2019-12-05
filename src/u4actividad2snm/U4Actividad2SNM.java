@@ -29,8 +29,16 @@ public class U4Actividad2SNM {
         for (int j = 1; j <= JUGADORES; j++) {
             String listaCartasJugador = obtenerCartasJugador(baraja, palos, cartas, j);
             System.out.println("Cartas jugador " + j + ": " + listaCartasJugador);
-            System.out.print("¿Qué carta lanzas?: ");
-            String cartaLanzada = leerCartaLanzada();
+            do {
+                System.out.print("¿Qué carta lanzas?: ");
+                String cartaLanzada = leerCartaLanzada();
+                boolean formatoCorrecto = comprobarFormato(cartaLanzada, listaCartasJugador);
+                if (formatoCorrecto) {
+                    break;
+                }
+
+            } while (true);
+
         }
 
     }
@@ -73,5 +81,12 @@ public class U4Actividad2SNM {
         String input = scanner.nextLine();
         return input;
 
+    }
+
+    public boolean comprobarFormato(String cartaLanzada, String listaCartasJugador) {
+        if (cartaLanzada.length() == 2 && listaCartasJugador.contains(cartaLanzada)) {
+            return true;
+        }
+        return false;
     }
 }
