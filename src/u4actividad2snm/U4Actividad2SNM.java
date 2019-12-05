@@ -17,23 +17,30 @@ public class U4Actividad2SNM {
     }
 
     public void inicio() {
-        String[] cartas = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "S", "C", "R"};
-        String[] palos = {"OROS", "ESPADAS", "BASTOS", "COPAS"};
-        String[] palosPrefix = {"O", "E", "B", "C"};
+        String[] cartas = cartas();
+        int[] cartasValores = cartasValores();
+        String[] palos = palos();
+        String[] palosPrefix = palosPrefix();
         //Inprimir palo dominate
         int paloDominante = (int) (Math.random() * palos.length);
         //Generar baraja
         int[][] baraja = generarBaraja(palos, cartas, JUGADORES, REPARTICION);
+        //Array de los datos introducidos
+        String[] totalCartasLanzadas = new String[JUGADORES];
+        
+        //----------------------
+        System.out.println("Palo dominante => " + palos[paloDominante]); 
 
         //----------------------------------------------------------------------------  
         for (int j = 1; j <= JUGADORES; j++) {
             String listaCartasJugador = obtenerCartasJugador(baraja, palos, cartas, j);
-            System.out.println("Cartas jugador " + j + ": " + listaCartasJugador);
+            System.out.println("\nCartas jugador " + j + ": " + listaCartasJugador);
             do {
                 System.out.print("¿Qué carta lanzas?: ");
                 String cartaLanzada = leerCartaLanzada();
                 boolean formatoCorrecto = comprobarFormato(cartaLanzada, listaCartasJugador);
                 if (formatoCorrecto) {
+                    totalCartasLanzadas[j - 1] = cartaLanzada;
                     break;
                 }
 
@@ -89,4 +96,27 @@ public class U4Actividad2SNM {
         }
         return false;
     }
+
+    public int[] cartasValores() {
+        int[] valores = {10, 0, 0, 0, 5, 0, 0, 0, 0, 2, 3, 4};
+        return valores;
+    }
+    
+    public String[] cartas() {
+        String[] cartas = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "S", "C", "R"};
+        return cartas;
+    }
+
+    public String[] palos() {
+        String[] palos = {"OROS", "ESPADAS", "BASTOS", "COPAS"};
+        return palos;
+
+    }
+
+    public String[] palosPrefix() {
+        String[] palosPrefix = {"O", "E", "B", "C"};
+        return palosPrefix;
+    }
+    
+
 }
