@@ -8,7 +8,7 @@ public class U4Actividad2SNM {
 
     static final int JUGADORES = 4;
     static final int REPARTICION = 4;
-    
+
     public static void main(String[] args) {
         U4Actividad2SNM programa = new U4Actividad2SNM();
         programa.inicio();
@@ -19,27 +19,48 @@ public class U4Actividad2SNM {
         String[] palos = {"OROS", "ESPADAS", "BASTOS", "COPAS"};
         String[] palosPrefix = {"O", "E", "B", "C"};
         //Inprimir palo dominate
-        int paloDominante =(int) (Math.random() * palos.length);
+        int paloDominante = (int) (Math.random() * palos.length);
         //Generar baraja
         int[][] baraja = generarBaraja(palos, cartas, JUGADORES, REPARTICION);
+
+        //----------------------------------------------------------------------------  
+        for (int j = 1; j <= JUGADORES; j++) {
+            String listaCartasJugador = obtenerCartasJugador(baraja, palos, cartas, j);
+            System.out.println("Cartas jugador " + j + ": " + listaCartasJugador);
+        }
+
     }
-    
-    public int[][] generarBaraja(String[] palos, String[] cartas, int jugadores, int repartirCartas) 
-    {
+
+    public int[][] generarBaraja(String[] palos, String[] cartas, int jugadores, int repartirCartas) {
         int[][] baraja = new int[palos.length][cartas.length];
-        for (int i = 0; i < repartirCartas; i++) 
-        {
-            for (int j = 1; j <= jugadores; j++) 
-            {
+        for (int i = 0; i < repartirCartas; i++) {
+            for (int j = 1; j <= jugadores; j++) {
                 int positionY = (int) (Math.random() * palos.length);
                 int positionX = (int) (Math.random() * cartas.length);
-                
-                if (baraja[positionY][positionX] == 0)
+
+                if (baraja[positionY][positionX] == 0) {
                     baraja[positionX][positionX] = j;
-                else
+                } else {
                     --j;
+                }
             }
         }
         return baraja;
+    }
+
+    public String obtenerCartasJugador(int[][] baraja, String[] palos, String[] cartas, int numeroJugador) {
+        String cartasJugador = "";
+        for (int p = 0; p < baraja.length; p++) {
+            for (int c = 0; c < baraja[p].length; c++) {
+                if (baraja[p][c] == numeroJugador) {
+                    if (!cartasJugador.equals("")) {
+                        cartasJugador += " | " + cartas[c] + palos[p].charAt(0);
+                    } else {
+                        cartasJugador = cartas[c] + palos[p].charAt(0);
+                    }
+                }
+            }
+        }
+        return cartasJugador;
     }
 }
