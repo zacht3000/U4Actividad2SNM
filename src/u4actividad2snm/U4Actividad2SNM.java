@@ -102,6 +102,35 @@ public class U4Actividad2SNM {
         return false;
     }
 
+    public void imprimirGanadores(int[] puntuacion, int mayorPuntuacion) {
+        System.out.print("El jugador ");
+
+        int contadorGanadores = 0;
+        for (int i = 0; i < puntuacion.length; i++) {
+
+            if (puntuacion[i] >= mayorPuntuacion) {
+                if (contadorGanadores == 0) {
+                    System.out.print(i + 1);
+                } else {
+                    System.out.print(", " + (i + 1));
+                }
+                contadorGanadores++;
+            }
+        }
+        System.out.print(" gana la partida\n");
+    }
+
+    public int mayorNumero(int[] numeros) {
+        int value = 0;
+        for (int i : numeros) {
+
+            if (i > value) {
+                value = i;
+            }
+        }
+        return value;
+    }
+
     public boolean hayCartasEnPaloDom(String[] cartasLanzadas, String simboloPaloDom) {
         for (String carta : cartasLanzadas) {
             String prefijoPalo = carta.substring(1);
@@ -111,7 +140,89 @@ public class U4Actividad2SNM {
         }
         return false;
     }
-    
+
+    public boolean hayCartasConValorPaloDom(String[] cartasLanzadas, String simboloPaloDom) {
+        for (String carta : cartasLanzadas) {
+            String simboloCarta = carta.substring(0, 1);
+            String prefijoPalo = carta.substring(1);
+
+            if (prefijoPalo.equals(simboloPaloDom) && obtenerValorCarta(simboloCarta) > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public int[] obtenerCartasIndices(String[] cartasLanzadas, String simboloPaloDom, int numJugadores) {
+        int[] puntos = new int[numJugadores];
+
+        for (int i = 0; i < cartasLanzadas.length; i++) {
+            String simboloCarta = cartasLanzadas[i].substring(0, 1);
+            String prefijoPalo = cartasLanzadas[i].substring(1);
+
+            if (!"".equals(simboloPaloDom)) {
+                if (prefijoPalo.equals(simboloPaloDom)) {
+                    puntos[i] = obtenerIndiceCarta(simboloCarta);
+                }
+            } else {
+                puntos[i] = obtenerIndiceCarta(simboloCarta);
+            }
+        }
+        return puntos;
+    }
+
+    public int[] obtenerCartasPuntos(String[] cartasLanzadas, String simboloPaloDom, int numJugadores) {
+        int[] puntos = new int[numJugadores];
+
+        for (int i = 0; i < cartasLanzadas.length; i++) {
+            String simboloCarta = cartasLanzadas[i].substring(0, 1);
+            String prefijoPalo = cartasLanzadas[i].substring(1);
+
+            if (!"".equals(simboloPaloDom)) {
+                if (prefijoPalo.equals(simboloPaloDom) && obtenerValorCarta(simboloCarta) > 0) {
+                    puntos[i] = obtenerValorCarta(simboloCarta);
+                }
+            } else {
+                if (obtenerValorCarta(simboloCarta) > 0) {
+                    puntos[i] = obtenerValorCarta(simboloCarta);
+                }
+            }
+        }
+        return puntos;
+    }
+
+    public int[] comprobarPuntuacion(String[] cartasLanzadas, String[] palosPrefix, int indicePaloDom, int numJugadores) {
+        int[] puntuaciones = new int[numJugadores];
+        String simboloPaloDom = palosPrefix[indicePaloDom];
+
+        if (hayCartasEnPaloDom(cartasLanzadas, simboloPaloDom)) {
+            if (hayCartasConValorPaloDom(cartasLanzadas, simboloPaloDom)) {
+                int[] cartasPuntos = obtenerCartasPuntos(cartasLanzadas, simboloPaloDom, JUGADORES);
+                puntuaciones = cartasPuntos;
+            } else {
+                int[] cartasIndices = obtenerCartasIndices(cartasLanzadas, simboloPaloDom, JUGADORES);
+                puntuaciones = cartasIndices;
+            }
+        } else {
+            int[] cartasPuntos = obtenerCartasPuntos(cartasLanzadas, "", JUGADORES);
+
+            int suma = 0;
+            for (int i : cartasPuntos) {
+                suma += i;
+            }
+
+            // Si los puntos de las cartas no son cero
+            if (suma != 0) {
+                puntuaciones = cartasPuntos;
+            } else {
+                int[] cartasIndices = obtenerCartasIndices(cartasLanzadas, "", JUGADORES);
+                puntuaciones = cartasIndices;
+            }
+
+        }
+        return puntuaciones;
+    }
     public int[] cartasValores() {
         int[] valores = {10, 0, 0, 0, 5, 0, 0, 0, 0, 2, 3, 4};
         return valores;
@@ -133,5 +244,25 @@ public class U4Actividad2SNM {
         return palosPrefix;
     }
     
+    public int obtenerValorCarta(String simbolo)
+    {
+        String[] cartas = cartas();
+        int[] valoresCartas = cartasValores();
+        for (int i = 0; i < cartas.length; i++) {
+            if (cartas[i].equals(simbolo))
+                return valoresCartas[i];
+        }
+        return 0;
+    }
     
+    public int obtenerIndiceCarta(String simbolo)
+    {
+        String[] cartas = cartas();
+        int[] valoresCartas = cartasValores();
+        for (int i = 0; i < cartas.length; i++) {
+            if (cartas[i].equals(simbolo))
+                return i + 1;
+        }
+        return 0;
+    }
 }
