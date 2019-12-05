@@ -1,5 +1,7 @@
 package u4actividad2snm;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Santiago Naranjo Marcillo
@@ -27,6 +29,8 @@ public class U4Actividad2SNM {
         for (int j = 1; j <= JUGADORES; j++) {
             String listaCartasJugador = obtenerCartasJugador(baraja, palos, cartas, j);
             System.out.println("Cartas jugador " + j + ": " + listaCartasJugador);
+            System.out.print("¿Qué carta lanzas?: ");
+            String cartaLanzada = leerCartaLanzada();
         }
 
     }
@@ -39,7 +43,7 @@ public class U4Actividad2SNM {
                 int positionX = (int) (Math.random() * cartas.length);
 
                 if (baraja[positionY][positionX] == 0) {
-                    baraja[positionX][positionX] = j;
+                    baraja[positionY][positionX] = j;
                 } else {
                     --j;
                 }
@@ -62,5 +66,12 @@ public class U4Actividad2SNM {
             }
         }
         return cartasJugador;
+    }
+
+    public String leerCartaLanzada() {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        return input;
+
     }
 }
